@@ -28,14 +28,15 @@ This project enables users to manage their contacts, including adding, updating,
 
 ### **2. Frontend Setup (React JS)**
 
-1. Navigate to the `client` folder:
-   
-   cd client
-   
-2. Create a React app:
+1.
+1. Create a React app:
    
    npx create-react-app 
    
+2. Navigate to the `client` folder:
+   
+   cd client
+
 3. Install dependencies:
    
    npm install
@@ -50,13 +51,15 @@ This project enables users to manage their contacts, including adding, updating,
 
 ### **3. Backend Setup (Ruby on Rails)**
 
-1. Navigate to the `server` folder:
-  
-   cd ../server
 
-2. Create a new Rails API application:
+
+1. Create a new Rails API application:
    
    rails new . --api --database=postgresql
+   
+2. Navigate to the `server` folder:
+  
+   cd ../server
  
 3. Install gems:
   
