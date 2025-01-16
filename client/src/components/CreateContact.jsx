@@ -40,7 +40,7 @@ const CreateContact = ({ onCreate, closeForm }) => {
         return response.json();
       })
       .then((newContact) => {
-        onCreate(newContact); // Notify parent to update the list
+        onCreate(newContact); 
         setSuccessMessage('Created Successfully!');
         
       })

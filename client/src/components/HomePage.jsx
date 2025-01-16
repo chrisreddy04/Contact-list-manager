@@ -66,7 +66,7 @@ const HomePage = () => {
 
   return (
     <div className="homepage-container">
-      {/* Background and Welcome Message */}
+      
       <div className="welcome-section">
         <img src={HomePageBackground} alt="Background" className="background-image" />
         <div className="content">
@@ -80,7 +80,6 @@ const HomePage = () => {
       
 
 
-      {/* Contacts Section */}
       <div id="contacts-section" className="contacts-section">
         <div className="contacts-header">
           <h2>CONTACTS</h2>
@@ -129,7 +128,7 @@ const HomePage = () => {
         </button>
       </div>
 
-      {/* Modal for Create or Update */}
+      
       {showForm && (
         <div className="modal-overlay">
           {isEditing ? (

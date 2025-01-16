@@ -15,8 +15,8 @@ const DeleteContact = ({ contactId, onDelete }) => {
         return response.json();
       })
       .then(() => {
-        onDelete(contactId); // Notify parent to update the list
-        setShowConfirm(false); // Close the confirmation popup
+        onDelete(contactId); 
+        setShowConfirm(false); 
       })
       .catch((error) => {
         console.error('Error deleting contact:', error);
@@ -25,12 +25,11 @@ const DeleteContact = ({ contactId, onDelete }) => {
 
   return (
     <>
-      {/* Delete Button */}
+      
       <button onClick={() => setShowConfirm(true)} className="delete-contact-btn">
         Delete
       </button>
 
-      {/* Custom Confirmation Popup */}
       {showConfirm && (
         <div className="Delete-modal-overlay">
           <div className="Delete-modal-content">
