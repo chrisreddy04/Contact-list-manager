@@ -10,6 +10,12 @@ module Api
       end
     end
 
+     # GET /api/contacts
+     def index
+      contacts = Contact.all # Fetch all contacts from the database
+      render json: contacts  # Return the contacts as JSON
+    end
+
     private
 
     # Strong parameters for contact creation

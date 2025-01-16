@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   namespace :api do
-    resources :contacts
+    resources :contacts, only: [:index, :create]
   end
 
   # Catch-all route to serve the React app
