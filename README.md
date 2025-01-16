@@ -117,10 +117,11 @@ Added custom CSS styling to enhance the UI, focusing on responsive design.
 
 ## **Key Features**
 
-- Create, read, update, and delete (CRUD) contacts.
-- Frontend built using React hooks for state management.
-- Backend API endpoints built using Ruby on Rails.
-- Database persistence using PostgreSQL.
+- Add new contacts with name and email.
+- Update existing contacts.
+- Delete contacts with a confirmation prompt.
+- Search contacts by name or email.
+- Responsive design with smooth animations.
 
 ---
 
