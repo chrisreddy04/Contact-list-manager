@@ -1,6 +1,6 @@
 module Api
   class ContactsController < ApplicationController
-    before_action :set_contact, only: [:update]
+    before_action :set_contact, only: [:update, :destroy]
 
      # GET /api/contacts
      def index
@@ -26,6 +26,16 @@ module Api
         render json: { error: @contact.errors.full_messages.join(", ") }, status: :unprocessable_entity
       end
     end
+
+    # DELETE /api/contacts/:id
+   def destroy
+      if @contact.destroy
+        render json: { message: 'Contact deleted successfully' }, status: :ok
+      else
+        render json: { error: 'Failed to delete contact' }, status: :unprocessable_entity
+      end
+    end
+
     private
 
      # Find contact by ID

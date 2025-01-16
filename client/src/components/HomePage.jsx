@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../CssComponents/HomePage.css';
 import HomePageBackground from '../assets/images/techImageBG2.jpg';
+import DeleteContact from './DeleteContact';
 
 const HomePage = () => {
   const scrollToContacts = () => {
@@ -37,6 +38,12 @@ const HomePage = () => {
       .catch((error) => console.error('Error fetching contacts:', error));
   };
 
+  const handleDelete = (deletedContactId) => {
+    // Update local state after deletion
+    setContacts((prevContacts) =>
+      prevContacts.filter((contact) => contact.id !== deletedContactId)
+    );
+  };
   const CancelToggleForm = () => {
     setShowForm(false);
   }
@@ -188,6 +195,7 @@ const HomePage = () => {
                   <button className="update-contact-btn" onClick={() => toggleForm('edit', contact)}>
                     Update
                   </button>
+                  <DeleteContact contactId={contact.id} onDelete={handleDelete} />
                 </td>
               </tr>
             ))}
