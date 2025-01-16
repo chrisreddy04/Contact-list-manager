@@ -1,0 +1,102 @@
+.homepage-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.background-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Ensures the image covers the full container */
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    /* Puts the image behind the text content */
+}
+
+.content {
+    position: relative;
+    z-index: 1;
+    /* Ensures content stays above the image */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: white;
+    text-align: center;
+}
+
+h1,
+p {
+    color: white;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    /* Initially hidden for animation */
+}
+
+.slide-in {
+    animation: slideUp 1.5s ease-out forwards;
+    /* Adds the slide-up animation */
+}
+
+p.slide-in {
+    animation-delay: 0.5s;
+    /* Delays the animation for the <p> slightly */
+}
+
+
+/* Keyframes for the slide-up effect */
+
+@keyframes slideUp {
+    0% {
+        transform: translateY(50px);
+        /* Start below */
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        /* End in the correct position */
+        opacity: 1;
+    }
+}
+
+.go-to-contacts-btn {
+    margin-top: 20px;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    background-color: #3498db;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.go-to-contacts-btn:hover {
+    background-color: #1d6fa5;
+}
+
+.contacts-section {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f1f1f1;
+    padding: 20px;
+}
+
+.contacts-section h2 {
+    font-size: 2.5rem;
+    color: #2c3e50;
+}
+
+.contacts-section p {
+    font-size: 1.25rem;
+    color: #7f8c8d;
+}
