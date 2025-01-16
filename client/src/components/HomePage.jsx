@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../CssComponents/HomePage.css';
-import HomePageBackground from '../assets/images/HomeBG2.avif';
+import HomePageBackground from '../assets/images/techImageBG2.jpg';
 
 const HomePage = () => {
   const scrollToContacts = () => {
