@@ -97,6 +97,16 @@ This project enables users to manage their contacts, including adding, updating,
 
 ---
 
+### Design and Implementation Details
+
+---
+Approach Overview: The approach was to create a clear separation between the frontend and backend, enabling modular development and easier maintenance. By designing the homepage first, the main interface for interacting with contacts was prioritized.
+
+Developed the React frontend with a component-based architecture to keep code reusable and organized.
+
+Implemented a Rails API backend to handle data storage and CRUD operations, ensuring robust data persistence.
+
+Added custom CSS styling to enhance the UI, focusing on responsive design.
 ## **Design Decisions and Trade-offs**
 
 - **React with Rails API**: Chosen to separate frontend and backend for scalability and maintainability.
