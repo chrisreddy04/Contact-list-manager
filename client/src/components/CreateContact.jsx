@@ -31,10 +31,10 @@ const CreateContact = ({ onCreate, closeForm }) => {
       .then((response) => {
         if (!response.ok) {
           return response.json().then((data) => {
-            if (data.error && data.error.includes('Email already exists')) {
+            if (data.error && data.error.includes('Email has already been taken')) {
               throw new Error('This email already exists.');
             }
-            throw new Error('Failed to create contact.');
+            throw new Error(data.error || 'Failed to create contact.');
           });
         }
         return response.json();

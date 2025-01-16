@@ -207,6 +207,7 @@ p.slide-in {
 .form-container h1 {
     font-size: 1.8rem;
     margin-bottom: 20px;
+    font-family: 'Electrolize';
 }
 
 .input-container {
@@ -410,4 +411,12 @@ input:focus {
     display: flex;
     justify-content: space-around;
     margin-top: 20px;
+}
+
+.no-contacts-message {
+    text-align: center;
+    font-size: 1.5rem;
+    color: gray;
+    margin: 20px 0;
+    font-style: italic;
 }

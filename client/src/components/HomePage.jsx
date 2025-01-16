@@ -92,6 +92,9 @@ const HomePage = () => {
             className="search-bar"
           />
         </div>
+
+
+  {filteredContacts.length > 0 ? (
         <table className="contacts-table">
           <thead>
             <tr>
@@ -118,6 +121,9 @@ const HomePage = () => {
             ))}
           </tbody>
         </table>
+        ) : (
+          <p className="no-contacts-message">No contacts to display. Add a new contact!</p>
+        )}
         <button className="create-contact-btn" onClick={() => toggleForm('create')}>
           Create New Contact
         </button>
