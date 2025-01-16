@@ -11,10 +11,14 @@ const HomePage = () => {
   const [contacts, setContacts] = useState([]);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [searchQuery, setSearchQuery] = useState(''); 
   const [showForm, setShowForm] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentContact, setCurrentContact] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
+
 
 
   // Debugging `successMessage` state updates
@@ -33,15 +37,67 @@ const HomePage = () => {
       .catch((error) => console.error('Error fetching contacts:', error));
   };
 
-  const toggleForm = () => {
-    setShowForm((prev) => !prev);
+  const CancelToggleForm = () => {
+    setShowForm(false);
+  }
+  
+  const toggleForm = (mode, contact = null) => {
+    setShowForm(true);
+    setIsEditing(mode === 'edit');
+    setCurrentContact(contact);
+    setName(contact ? contact.name : '');
+    setEmail(contact ? contact.email : '');
     setError(null);
     setSuccessMessage(null);
-    setName('');
-    setEmail('');
     setLoading(false);
   };
+  
+  const updateContact = (e) => {
+    e.preventDefault();
 
+    if (!name.trim() || !email.trim()) {
+      setError('Name and email cannot be empty.');
+      return;
+    }
+
+    setError(null);
+    setLoading(true);
+
+    fetch(`http://localhost:3000/api/contacts/${currentContact.id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contact: { name, email } }),
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error('Failed to update contact');
+        return response.json();
+      })
+      .then((updatedContact) => {
+        // Update the contact in the local state
+        setContacts((prevContacts) =>
+          prevContacts.map((contact) =>
+            contact.id === updatedContact.id ? updatedContact : contact
+          )
+        );
+        setSuccessMessage('Contact updated successfully!');
+        setShowForm(false);
+        setIsEditing(false);
+        setCurrentContact(null);
+      })
+      .catch((error) => {
+        setError(error.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+
+ // Filter contacts based on search query
+ const filteredContacts = contacts.filter((contact) =>
+  contact.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  contact.email.toLowerCase().includes(searchQuery.toLowerCase())
+);
   const createContact = (e) => {
     e.preventDefault();
 
@@ -106,7 +162,16 @@ const HomePage = () => {
       </div>
 
       <div id="contacts-section" className="contacts-section">
-        <h2>Contacts</h2>
+      <div className="contacts-header">
+          <h2>Contacts</h2>
+          <input
+            type="text"
+            placeholder="Search by name or email..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="search-bar"
+          />
+        </div>
         <table className="contacts-table">
           <thead>
             <tr>
@@ -115,10 +180,15 @@ const HomePage = () => {
             </tr>
           </thead>
           <tbody>
-            {contacts.map((contact) => (
+            {filteredContacts.map((contact) => (
               <tr key={contact.id}>
                 <td>{contact.name}</td>
                 <td>{contact.email}</td>
+                <td>
+                  <button className="update-contact-btn" onClick={() => toggleForm('edit', contact)}>
+                    Update
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -132,17 +202,17 @@ const HomePage = () => {
       {showForm && (
         <div className="modal-overlay">
           <div className="form-container">
-            <h1>Create New Contact</h1>
+            <h1>{isEditing ? 'Update Contact' : 'Create New Contact'}</h1>
             {successMessage ? (
               <div className="success-container">
                   {console.log('Rendering success message:', successMessage)}
                 <p className="success-message">{successMessage}</p>
-                <button onClick={toggleForm} className="action-button">
+                <button onClick={() => setShowForm(false)}className="action-button">
                   OK
                 </button>
               </div>
             ) : (
-              <form onSubmit={createContact}>
+              <form onSubmit={isEditing ? updateContact : createContact}>
                 <div className="input-container">
                   <input
                     type="text"
@@ -166,9 +236,9 @@ const HomePage = () => {
                   )}
                 </div>
                 <button type="submit" className="action-button" disabled={loading}>
-                  {loading ? 'Creating...' : 'Submit'}
+                {loading ? (isEditing ? 'Updating...' : 'Creating...') : isEditing ? 'Update' : 'Submit'}
                 </button>
-                <button type="button" className="cancel-button" onClick={toggleForm}>
+                <button type="button" className="cancel-button" onClick={CancelToggleForm}>
                   Cancel
                 </button>
                 {error && <p className="error-message">{error}</p>}
