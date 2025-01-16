@@ -16,6 +16,12 @@ const HomePage = () => {
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
 
+
+  // Debugging `successMessage` state updates
+  useEffect(() => {
+    console.log('Updated successMessage:', successMessage);
+  }, [successMessage]);
+
   useEffect(() => {
     fetchContacts();
   }, []);
@@ -33,6 +39,7 @@ const HomePage = () => {
     setSuccessMessage(null);
     setName('');
     setEmail('');
+    setLoading(false);
   };
 
   const createContact = (e) => {
@@ -40,16 +47,24 @@ const HomePage = () => {
 
     if (!name.trim() || !email.trim()) {
       setError('Name and email cannot be empty.');
+      setLoading(false);
+      return;
+    }
+
+    if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+      setError('Please enter a valid email address.');
       return;
     }
 
     if (contacts.some((contact) => contact.email === email)) {
       setError('This email already exists.');
+      setLoading(false);
       return;
     }
 
-    setLoading(true);
     setError(null);
+    setLoading(true);
+   
 
     fetch('http://localhost:3000/api/contacts', {
       method: 'POST',
@@ -61,14 +76,20 @@ const HomePage = () => {
         return response.json();
       })
       .then((newContact) => {
-        setContacts([...contacts, newContact]);
-        setLoading(false);
-        setSuccessMessage('Contact created successfully!');
+          console.log('New contact added:', newContact); // Debugging
+          setContacts([...contacts, newContact]);
+          setSuccessMessage('Contact created successfully!');
       })
       .catch((error) => {
         setError(error.message);
         setLoading(false);
+      })
+      .finally(() =>{
+        setLoading(false);
       });
+      
+      
+      
   };
 
   return (
@@ -109,40 +130,49 @@ const HomePage = () => {
       </div>
 
       {showForm && (
-  <div className="modal-overlay">
-    <div className="modal-content">
-      {successMessage ? (
-        <div className="success-container">
-          <h3>{successMessage}</h3>
-          <button onClick={toggleForm} className="close-btn">
-            OK
-          </button>
-        </div>
-      ) : (
-        <form onSubmit={createContact} className="create-contact-form">
-          <h3>Create New Contact</h3>
-          <input
-            type="text"
-            placeholder="Enter Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-          <input
-            type="email"
-            placeholder="Enter Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <button type="submit" disabled={loading}>
-            {loading ? 'Creating...' : 'Submit'}
-          </button>
-          <button type="button" className="cancel-btn" onClick={toggleForm}>
-            Cancel
-          </button>
-          {error && <p className="error-message">{error}</p>}
-        </form>
+        <div className="modal-overlay">
+          <div className="form-container">
+            <h1>Create New Contact</h1>
+            {successMessage ? (
+              <div className="success-container">
+                  {console.log('Rendering success message:', successMessage)}
+                <p className="success-message">{successMessage}</p>
+                <button onClick={toggleForm} className="action-button">
+                  OK
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={createContact}>
+                <div className="input-container">
+                  <input
+                    type="text"
+                    placeholder="Full Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className={error && !name ? 'error-input' : ''}
+                  />
+                  {error && !name && <p className="error-message">Name is required.</p>}
+                </div>
+                <div className="input-container">
+                  <input
+                    type="email"
+                    placeholder="Email Address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className={error && email && !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email) ? 'error-input' : ''}
+                  />
+                  {error && email && !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email) && (
+                    <p className="error-message">Please enter a valid email address.</p>
+                  )}
+                </div>
+                <button type="submit" className="action-button" disabled={loading}>
+                  {loading ? 'Creating...' : 'Submit'}
+                </button>
+                <button type="button" className="cancel-button" onClick={toggleForm}>
+                  Cancel
+                </button>
+                {error && <p className="error-message">{error}</p>}
+              </form>
             )}
           </div>
         </div>

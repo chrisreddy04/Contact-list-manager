@@ -1,3 +1,5 @@
+/* HomePage Container Styles */
+
 .homepage-container {
     position: relative;
     width: 100%;
@@ -9,7 +11,6 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    /* Ensures the image covers the full container */
     position: absolute;
     top: 0;
     left: 0;
@@ -20,7 +21,6 @@
 .content {
     position: relative;
     z-index: 1;
-    /* Ensures content stays above the image */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -30,12 +30,12 @@
     text-align: center;
 }
 
-h1,
-p {
+.content h1,
+.content p {
     color: white;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-    opacity: 0;
     /* Initially hidden for animation */
+    opacity: 0;
 }
 
 .slide-in {
@@ -49,17 +49,15 @@ p.slide-in {
 }
 
 
-/* Keyframes for the slide-up effect */
+/* Keyframes for slide-up animation */
 
 @keyframes slideUp {
     0% {
         transform: translateY(50px);
-        /* Start below */
         opacity: 0;
     }
     100% {
         transform: translateY(0);
-        /* End in the correct position */
         opacity: 1;
     }
 }
@@ -80,6 +78,9 @@ p.slide-in {
 .go-to-contacts-btn:hover {
     background-color: #1d6fa5;
 }
+
+
+/* Contacts Section Styles */
 
 .contacts-section {
     padding: 40px 20px;
@@ -126,6 +127,9 @@ p.slide-in {
     background-color: #27ae60;
 }
 
+
+/* Modal and Form Styles */
+
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -139,45 +143,109 @@ p.slide-in {
     z-index: 1000;
 }
 
-.modal-content {
-    background-color: white;
+.form-container {
+    background-color: rgba(4, 4, 4, 0.85);
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    width: 100%;
-    max-width: 400px;
     text-align: center;
+    color: white;
+    width: 90%;
+    max-width: 400px;
 }
+
+.form-container h1 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+.input-container {
+    margin-bottom: 15px;
+    position: relative;
+}
+
+input {
+    width: 100%;
+    padding: 15px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #333;
+    color: white;
+    margin-bottom: 5px;
+    margin-left: -15px;
+}
+
+input:focus {
+    outline: 2px solid #e50914;
+}
+
+.error-input {
+    outline: 2px solid red;
+}
+
+.action-button {
+    background-color: #e50914;
+    color: white;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.action-button:hover {
+    background-color: #f40612;
+}
+
+.cancel-button {
+    background-color: gray;
+    color: white;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.cancel-button:hover {
+    background-color: #555;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9rem;
+    text-align: left;
+    margin-top: 5px;
+    visibility: visible;
+}
+
+
+/* Success Message */
 
 .success-container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 20px;
+    border-radius: 8px;
 }
 
 .success-message {
     color: green;
     font-size: 1.2rem;
-    margin-bottom: 20px;
-}
-
-.error-message {
-    color: red;
-    font-size: 1rem;
-    margin-top: 10px;
-}
-
-.close-btn {
-    padding: 10px 20px;
-    font-size: 1rem;
-    background-color: #3498db;
-    color: white;
-    border: none;
+    text-align: center;
+    margin-bottom: 10px;
+    padding: 10px;
     border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.close-btn:hover {
-    background-color: #1d6fa5;
+    visibility: visible !important;
+    opacity: 1 !important;
+    /* Force full visibility */
+    transition: opacity 0.5s ease-in-out;
+    /* Smooth fade-in effect */
 }
